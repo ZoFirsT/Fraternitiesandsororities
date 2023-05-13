@@ -31,7 +31,7 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: rgba(50, 50, 50, 0.8);
-    padding: 20px;
+    padding: 40px;
     box-shadow: 0px 0px 50px rgba(114, 34, 106, 0.745);
     border: 2px solid #686868;
     border-radius: 10px;
@@ -39,6 +39,11 @@ body, html {
     transition: opacity 1s ease-in;
     color: white;
 }
+
+#formContainer {
+    text-align: center; /* center align text */
+}
+
 
 .logo {
     position: absolute;
@@ -49,14 +54,15 @@ body, html {
 }
 
 .back-btn {
-    width: 40px;
+    width: 60px;
     cursor: pointer;
     position: absolute;
     top: 10px;
     left: 10px;
     display: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-out, display 0s;
 }
+
 
 #countdown {
     position: fixed;
@@ -71,22 +77,29 @@ body, html {
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease-out;
 }
+.hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
 
 input[type="text"] {
     padding: 10px;
-    border: none;
     border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
-    background-color: white;
-    transition: background-color 0.3s ease;
+    border: 1px solid #ddd; /* add border */
+    margin-bottom: 20px; /* add some margin */
 }
 
 input[type="text"]:focus {
-    background-color: #f5f5f5;
+    border-color: #8326da; /* change border color on focus */
 }
+
+h1 {
+    font-size: 2.5em; /* make the title larger */
+    font-weight: bold; /* make the title bolder */
+    color: #fff; /* change the title color */
+}
+
 
 button {
     padding: 10px 20px;
@@ -102,6 +115,13 @@ button {
 button:hover {
     background-color: #8326da;
 }
+
+#result {
+    font-size: 24px;
+    transition: opacity 1s ease-in-out;
+}
+
+
 
 @media (min-width: 480px) {
     #countdown {

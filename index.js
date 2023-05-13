@@ -16,15 +16,15 @@ function checkCode() {
     var studentName = studentCodes[inputCode];
 
     if (studentName) {
-        var resultText = 'คำใบ้  :   ' + studentName + '.';
         var currentIndex = 0;
         var resultElement = document.getElementById('result');
 
+        document.getElementById('hint').style.display = 'block'; // Show the "คำใบ้" text
         document.getElementById('formContainer').classList.add('hidden');
         setTimeout(function() {
             var typingInterval = setInterval(function() {
-                if (currentIndex < resultText.length) {
-                    resultElement.innerText += resultText[currentIndex];
+                if (currentIndex < studentName.length) {
+                    resultElement.innerText += studentName[currentIndex];
                     currentIndex++;
                 } else {
                     clearInterval(typingInterval);
@@ -41,13 +41,20 @@ function checkCode() {
     }, 1000);
 }
 
+
+
+
 function goBack() {
     document.getElementById('result').style.opacity = "0";
     document.getElementById('backButton').style.display = "none";
+    document.getElementById('hint').style.display = 'none'; // Hide the "คำใบ้" text
     setTimeout(function(){
         document.getElementById('formContainer').classList.remove('hidden');
+        document.getElementById('result').innerText = '';
     }, 1000);
 }
+
+
 
 var countDownDate = new Date("May 15, 2023 00:00:00").getTime();
 var countdownInterval = setInterval(updateCountdown, 1000);
