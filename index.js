@@ -56,7 +56,7 @@ function goBack() {
 
 
 
-var countDownDate = new Date("May 15, 2023 00:00:00").getTime();
+var countDownDate = new Date("June 15, 2023 00:00:00").getTime();
 var countdownInterval = setInterval(updateCountdown, 1000);
 
 function updateCountdown() {
@@ -85,4 +85,22 @@ window.onload = function() {
     }, 2000);
     loadStudentCodes();
     updateCountdown(); // Call the function on page load
+}
+
+document.onkeydown = function(e) {
+    if(event.keyCode == 123) {
+       return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+       return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+       return false;
+    }
+    if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+       return false;
+    }
+    if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+       return false;
+    }
 }
