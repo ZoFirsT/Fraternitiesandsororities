@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>รับคำใบ้สายรหัส</title>
+<link rel="stylesheet" href="./style.css">
+<script src="./index.js"></script>
+</head>
+<body>
+
+<video autoplay muted loop id="bg-video" class="bg-video">
+    <source src="https://static.vecteezy.com/system/resources/previews/003/184/675/mp4/purple-neon-border-with-flare-on-the-top-background-free-video.mp4" type="video/mp4">
+</video>
+
+<div id="loading">
+    <div class="loader"></div>
+</div>
+
+<div class="container">
+    <img src="./img/logo.png" alt="Logo" class="logo" /> <!-- Replace logo.png with the path to your logo image -->
+    <div id="formContainer">
+        <h1>ใส่รหัสนักศึกษา</h1>
+
+        <p>ตัวอย่าง : 056410107017-0</p>
+        <input id="studentCodeInput" type="text" />
+        <button onclick="checkCode()">รับคำใบ้พี่รหัส</button>
+    </div>
+
+    <p id="result"></p>
+
+    <!-- Adding the back button -->
+    <img id="backButton" src="https://cdn2.iconfinder.com/data/icons/simple-circular-icons-line/84/Left_Arrow_-512.png" class="back-btn" onclick="goBack()" />
+
+</div>
+
+<div id="countdown">เหลือเวลาอีก <span id="time"></span></div>
+
+
+
+
+</body>
+</html>
