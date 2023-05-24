@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student Codes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            color: #212529;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+        }
+
+        #studentCodesContainer div {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #studentCodesContainer div p {
+            margin: 0;
+        }
+
+        #studentCodesContainer div hr {
+            margin: 10px 0;
+            border-top: 1px solid #dee2e6;
+        }
+
+        #studentCodesContainer div button {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button[type="submit"] {
+                width: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ระบบจัดการข้อมูล</h1>
+
+    <div id="studentCodesContainer"></div>
+
+    <form id="editForm">
+        <label for="code">รหัสนักศึกษาของน้อง:</label>
+        <input type="text" id="code" name="code" required>
+        <label for="hint">คำใบ้:</label>
+        <input type="text" id="hint" name="hint" required>
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        // Fetch student codes data from server and update HTML
+        fetch('/studentCodes')
+            .then(response => response.json())
+            .then(data => {
+                const studentCodesContainer = document.getElementById('studentCodesContainer');
+                const studentCodesData = data;
+
+                for (const studentCode in studentCodesData) {
+                    const hint = studentCodesData[studentCode];
+
+                    const studentCodeElement = document.createElement('div');
+                    studentCodeElement.innerHTML = `
+                        <p><strong>รหัสนักศึกษา:</strong> ${studentCode}</p>
+                        <p><strong>คำใบ้:</strong> ${hint}</p>
+                        <button onclick="editStudentCode('${studentCode}', '${hint}')">Edit</button>
+                        <button onclick="deleteStudentCode('${studentCode}')">Delete</button>
+                        <hr>
+                    `;
+
+                    studentCodesContainer.appendChild(studentCodeElement);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching student codes:', error);
+            });
+
+        // Populate form fields for editing a student code
+        function editStudentCode(studentCode, hint) {
+            document.getElementById('code').value = studentCode;
+            document.getElementById('hint').value = hint;
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+
+        // Delete a student code
+        function deleteStudentCode(studentCode) {
+            if (confirm(`Are you sure you want to delete student code ${studentCode}?`)) {
+                fetch(`/deleteStudentCode/${studentCode}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                        // Refresh the page to reflect the updated data
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting student code:', error);
+                    });
+            }
+        }
+
+        // Submit the edited student code to the server
+        document.getElementById('editForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const code = document.getElementById('code').value;
+            const hint = document.getElementById('hint').value;
+
+            fetch(`/editStudentCode/${code}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ hint })
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    // Refresh the page to reflect the updated data
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Error editing student code:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

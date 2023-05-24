@@ -18,6 +18,7 @@ function checkCode() {
     if (studentName) {
         var currentIndex = 0;
         var resultElement = document.getElementById('result');
+        resultElement.innerText = ''; // Reset the result text
 
         document.getElementById('hint').style.display = 'block'; // Show the "คำใบ้" text
         document.getElementById('formContainer').classList.add('hidden');
@@ -38,7 +39,7 @@ function checkCode() {
     setTimeout(function() {
         document.getElementById('result').style.opacity = "1";
         document.getElementById('backButton').style.display = "block";
-    }, 1000);
+    }, 500);
 }
 
 
@@ -51,13 +52,13 @@ function goBack() {
     setTimeout(function(){
         document.getElementById('formContainer').classList.remove('hidden');
         document.getElementById('result').innerText = '';
-    }, 1000);
+    }, 500);
 }
 
 
 
 var countDownDate = new Date("June 15, 2023 00:00:00").getTime();
-var countdownInterval = setInterval(updateCountdown, 1000);
+var countdownInterval = setInterval(updateCountdown, 500);
 
 function updateCountdown() {
     var now = new Date().getTime();
@@ -82,7 +83,7 @@ window.onload = function() {
     setTimeout(function() {
         document.getElementById('loading').style.display = 'none';
         document.querySelector('.container').style.opacity = '1';
-    }, 2000);
+    }, 500);
     loadStudentCodes();
     updateCountdown(); // Call the function on page load
 }
